@@ -57,16 +57,7 @@ const Login = (props) => {
     const [isError, setIsError] = useState(false)
 
     const { isAuth } = props
-    // useEffect(() => {
-    //     console.log(isAuth)
-    //     return () => {
-    //         if (isAuth) {
-    //             console.log("true")
-    //             console.log(props)
-    //             props.history.push('/admin/dashboard')
-    //         }
-    //     }
-    // }, [])
+   
     const isEmpty =
         state.emailId.length > 0 &&
         state.password.length > 0;
@@ -144,9 +135,9 @@ const Login = (props) => {
                                         Welcome to our admin panel. Please login using the form or register for a new account using the button below.
                                     </Typography>
                                 </CardContent>
-                                <CardActions>
+                                {/* <CardActions>
                                     <Button fullWidth href="/register" color="secondary" variant="contained">Create an account</Button>
-                                </CardActions>
+                                </CardActions> */}
                             </Card>
                         </Grid>
                         <Grid

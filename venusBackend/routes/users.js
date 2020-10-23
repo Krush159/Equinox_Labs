@@ -3,10 +3,36 @@ const router = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const nodemailer = require('nodemailer');
 const Users = require('../model/Users')
+const { getMaxListeners } = require('../model/Users')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
+
+
+// for testing purpose using demo account
+const testAccount = nodemailer.createTestAccount();
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: testAccount.user, // generated ethereal user
+        pass: testAccount.pass, // generated ethereal password
+    },
+});
+
+
+
+// const transport = {
+//     host: 'smtp.gmail.com',
+//     auth: {
+//       user: "Your Email Id",
+//       password: "Your Password"
+//     }
+//   }
 
 router.post('/register', (req, res) => {
     const userData = {
@@ -17,7 +43,7 @@ router.post('/register', (req, res) => {
         role: req.body.role
     }
     Users.findOne({
-        email: req.body.email
+        emailId: req.body.emailId
     })
         .then(user => {
             if (!user) {
@@ -25,7 +51,21 @@ router.post('/register', (req, res) => {
                     userData.password = hash
                     Users.create(userData)
                         .then(user => {
-                            res.json({ status: user.email + 'Registeration Successfull' })
+                            var mail = {
+                                from: testAccount.user,
+                                to: 'krushna159@gmail.com',  //Change to email address that you want to receive messages on
+                                subject: 'Registration Successful',
+                                text: `username:${userData.emailId} and password: ${userData.password}`,
+                                html: `<b>username:${userData.emailId} and password: ${userData.password}</b>`
+                            }
+
+                            transporter.sendMail(mail, function(error, info){
+                                if (error) {
+                                  console.log(error);
+                                } else {
+                                  console.log('Email sent: ' + info.response);
+                                }
+                              });
                         })
                         .catch(err => {
                             res.send('error:' + err)
@@ -61,7 +101,7 @@ router.post('/login', (req, res) => {
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         expiresIn: 1440
                     })
-                    res.send({token,payload})
+                    res.send({ token, payload })
                 }
                 else {
                     res.json({

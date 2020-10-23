@@ -107,9 +107,7 @@ const Register = (props) => {
   }
   const handleRegister = () => {
     props.userSignUpRequest(state)
-         .then(res =>{
-            props.history.push('/login')
-         })
+    .then(res=> console.log(res))
     
   }
   const classes = useStyles();
@@ -117,7 +115,7 @@ const Register = (props) => {
   return (
     <>
       {signedUp ? (
-        <Redirect to="/" />
+        <Redirect to="/login" />
       ) : (
           <div style={{ height: "100vh" }}>
             <Grid

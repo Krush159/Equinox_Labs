@@ -13,7 +13,10 @@ import GridContainer from "components/Grid/GridContainer.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import CustomTabs from 'components/CustomTabs/CustomTabs';
-import UsersTable  from 'components/UsersTable/UsersTable'
+import UsersTable  from 'components/UsersTable/UsersTable';
+import AddNewUser from 'components/AddNewUser/AddNewUser'
+
+
 import Axios from 'axios';
 import { SentimentSatisfied, SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
 
@@ -38,6 +41,13 @@ export default function UsersList() {
                             tabIcon: CloudUploadIcon,
                             tabContent: (
                                 <UsersTable />
+                            )
+                        },
+                        {
+                            tabName: "Register New User",
+                            tabIcon: QueueSharpIcon,
+                            tabContent: (
+                                <AddNewUser />
                             )
                         }
                     ]}

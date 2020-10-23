@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST,LOGIN_SUCCESS, LOGIN_FAILURE,LOGOUT_USER} from '../ActionTypes'
+import { LOGIN_REQUEST,LOGIN_SUCCESS, LOGIN_FAILURE,SEND_EMAIL ,LOGOUT_USER} from '../ActionTypes'
 import axios from 'axios'
 
 export const loginRequest = (payload)=>({
@@ -11,6 +11,10 @@ export const loginSuccess = (payload)=>({
 })
 export const loginFailure = (payload)=>({
     type: LOGIN_FAILURE,
+    payload
+})
+export const sendEmail = (payload) => ({
+    type: SEND_EMAIL,
     payload
 })
 export const logoutUser = () => ({
