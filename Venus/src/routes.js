@@ -29,6 +29,7 @@ import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import Profile from "views/Profile/Profile";
 import Openings from "views/Openings/Openings"
+import UsersList from "views/UsersList/UsersList"
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
@@ -63,6 +64,14 @@ const dashboardRoutes = [
     rtlName: "فرص عمل",
     icon: WorkIcon,
     component: Openings,
+    layout: "/admin"
+  },
+  {
+    path: "/Users",
+    name: "Users",
+    rtlName: "فرص عمل",
+    icon: WorkIcon,
+    component: UsersList,
     layout: "/admin"
   },
   // {
