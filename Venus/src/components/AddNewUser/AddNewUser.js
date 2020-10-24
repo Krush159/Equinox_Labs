@@ -19,6 +19,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import scss from './register.module.scss';
 import { userSignUpRequest } from 'redux/Authentication/Actions/RegisterAction'
+import Success from 'components/Multi-Step-Form/Success';
 // import logoImage from '../../../assets/images/portal-logo.png';
 
 
@@ -107,147 +108,148 @@ const Register = (props) => {
     }
     const handleRegister = () => {
         props.userSignUpRequest(state)
-            .then(res => console.log(res))
+            .then(setState({
+                firstName: "",
+                lastName: "",
+                emailId: "",
+                password: "",
+                role: ""
+            }))
 
     }
     const classes = useStyles();
-    const { signedUp } = props
+
     return (
         <>
-            {signedUp ? (
-                <Redirect to="/login" />
-            ) : (
-                    <div style={{ height: "100%" }}>
-                        <Grid
-                            container
-                            direction="row"
-                            spacing={0}
-                            justify="center"
-                            alignItems="center"
-                            className={classes.background}
-                        >
-                            <Grid item sm={10} xs={12} className={scss.panel}>
-                                <Grid direction={panelDirection} container spacing={0}>
+            <div style={{ height: "100vh" }}>
+                <Grid
+                    container
+                    direction="row"
+                    spacing={0}
+                    justify="center"
+                    alignItems="center"
+                // className={classes.background}
+                >
+                    <Grid item sm={10} xs={12} className={scss.panel}>
+                        <Grid direction={panelDirection} container spacing={0}>
 
-                                    <Grid
-                                        item
-                                        sm={12}
-                                        xs={12}
-                                    >
-                                        <Card className={scss.card}>
-                                            <CardContent>
-                                                <Typography variant="h5" component="h2" gutterBottom>
-                                                    Register
+                            <Grid
+                                item
+                                sm={12}
+                                xs={12}
+                            >
+                                <Card className={scss.card}>
+                                    <CardContent>
+                                        <Typography variant="h5" component="h2" gutterBottom>
+                                            Register
                                                 </Typography>
-                                                <Grid container>
-                                                    <Grid container spacing={3}>
-                                                        <Grid item sm={6} xs={12} >
-                                                            <TextField
-                                                                label="Firstname"
-                                                                fullWidth
-                                                                margin="normal"
-                                                                required
-                                                                variant="outlined"
-                                                                value={state.firstName}
-                                                                onChange={handleChange('firstName')}
-                                                                error={stateError.firstName !== ""}
-                                                                helperText={
-                                                                    stateError.firstName !== "" ? `${stateError.firstName}` : ""
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                        <Grid item sm={6} xs={12} >
-                                                            <TextField
-                                                                label="Lastname"
-                                                                fullWidth
-                                                                margin="normal"
-                                                                required
-                                                                variant="outlined"
-                                                                value={state.lastName}
-                                                                onChange={handleChange('lastName')}
-                                                                error={stateError.lastName !== ""}
-                                                                helperText={
-                                                                    stateError.lastName !== "" ? `${stateError.lastName}` : ""
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid container spacing={3}>
-                                                        <Grid item sm={6} xs={12}>
-                                                            <TextField
-                                                                label="Email Address"
-                                                                fullWidth
-                                                                margin="normal"
-                                                                required
-                                                                variant="outlined"
-                                                                type='email'
-                                                                value={state.emailId}
-                                                                onChange={handleChange('emailId')}
-                                                                error={stateError.emailId !== ""}
-                                                                helperText={
-                                                                    stateError.emailId !== "" ? `${stateError.emailId}` : ""
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                        <Grid item sm={6} xs={12} >
-                                                            <TextField
-                                                                label="Password"
-                                                                fullWidth
-                                                                margin="normal"
-                                                                required
-                                                                variant="outlined"
-                                                                type="password"
-                                                                value={state.password}
-                                                                onChange={handleChange('password')}
-                                                                error={stateError.password !== ""}
-                                                                helperText={
-                                                                    stateError.password !== "" ? `${stateError.password}` : ""
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid item xs={12} className={classes.margin}>
-                                                        <TextField
-                                                            id="select"
-                                                            label="Role"
-                                                            value={state.role}
-                                                            onChange={handleChange("role")}
-                                                            fullWidth
-                                                            margin="normal"
-                                                            select
-                                                            required
-                                                            variant="outlined"
-                                                            error={stateError.role !== ""}
-                                                            helperText={
-                                                                stateError.role !== "" ? `${stateError.role}` : ""
-                                                            }
-                                                        >
-                                                            <MenuItem value={"Admin"}>Admin</MenuItem>
-                                                            <MenuItem value={"HR Manager"}>HR Manager</MenuItem>
-                                                            <MenuItem value={"HR"}>HR</MenuItem>
-                                                        </TextField >
-                                                    </Grid>
+                                        <Grid container>
+                                            <Grid container spacing={3}>
+                                                <Grid item sm={6} xs={12} >
+                                                    <TextField
+                                                        label="Firstname"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        required
+                                                        variant="outlined"
+                                                        value={state.firstName}
+                                                        onChange={handleChange('firstName')}
+                                                        error={stateError.firstName !== ""}
+                                                        helperText={
+                                                            stateError.firstName !== "" ? `${stateError.firstName}` : ""
+                                                        }
+                                                    />
                                                 </Grid>
-                                            </CardContent>
-                                            <CardActions>
-                                                <Button
+                                                <Grid item sm={6} xs={12} >
+                                                    <TextField
+                                                        label="Lastname"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        required
+                                                        variant="outlined"
+                                                        value={state.lastName}
+                                                        onChange={handleChange('lastName')}
+                                                        error={stateError.lastName !== ""}
+                                                        helperText={
+                                                            stateError.lastName !== "" ? `${stateError.lastName}` : ""
+                                                        }
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={3}>
+                                                <Grid item sm={6} xs={12}>
+                                                    <TextField
+                                                        label="Email Address"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        required
+                                                        variant="outlined"
+                                                        type='email'
+                                                        value={state.emailId}
+                                                        onChange={handleChange('emailId')}
+                                                        error={stateError.emailId !== ""}
+                                                        helperText={
+                                                            stateError.emailId !== "" ? `${stateError.emailId}` : ""
+                                                        }
+                                                    />
+                                                </Grid>
+                                                <Grid item sm={6} xs={12} >
+                                                    <TextField
+                                                        label="Password"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        required
+                                                        variant="outlined"
+                                                        type="password"
+                                                        value={state.password}
+                                                        onChange={handleChange('password')}
+                                                        error={stateError.password !== ""}
+                                                        helperText={
+                                                            stateError.password !== "" ? `${stateError.password}` : ""
+                                                        }
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} className={classes.margin}>
+                                                <TextField
+                                                    id="select"
+                                                    label="Role"
+                                                    value={state.role}
+                                                    onChange={handleChange("role")}
                                                     fullWidth
-                                                    color="primary"
-                                                    variant="contained"
-                                                    onClick={handleRegister}
-                                                    disabled={!isEmpty || isError}
+                                                    margin="normal"
+                                                    select
+                                                    required
+                                                    variant="outlined"
+                                                    error={stateError.role !== ""}
+                                                    helperText={
+                                                        stateError.role !== "" ? `${stateError.role}` : ""
+                                                    }
                                                 >
-                                                    Register
-                        </Button>
-                                            </CardActions>
-                                        </Card>
-                                    </Grid>
-                                </Grid>
+                                                    <MenuItem value={"Admin"}>Admin</MenuItem>
+                                                    <MenuItem value={"HR Manager"}>HR Manager</MenuItem>
+                                                    <MenuItem value={"HR"}>HR</MenuItem>
+                                                </TextField >
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button
+                                            fullWidth
+                                            color="primary"
+                                            variant="contained"
+                                            onClick={handleRegister}
+                                            disabled={!isEmpty || isError}
+                                        >
+                                            Register
+                                        </Button>
+                                    </CardActions>
+                                </Card>
                             </Grid>
                         </Grid>
-                    </div>
-                )
-            }
+                    </Grid>
+                </Grid>
+            </div>
         </>
     );
 };

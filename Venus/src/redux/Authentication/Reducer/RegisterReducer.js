@@ -10,7 +10,7 @@ const registerReducer = (state = initState, action) => {
         case REGISTER_REQUEST:
             return { ...state, registering: true }
         case REGISTER_SUCCESS:
-            alert("Registeration Successfull")
+            alert("Registered Successfully. Email has been sent.")
             return { ...state, registering: false, signedUp: true }
         case REGISTER_FAILURE:
             alert(action.payload)

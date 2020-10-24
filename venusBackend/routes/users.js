@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const Users = require('../model/Users')
-const { getMaxListeners } = require('../model/Users')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -19,8 +18,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass, // generated ethereal password
+        user: 'kameron.maggio@ethereal.email' , // generated ethereal user
+        pass: 'eHTYj5hU4vpYDt4GMh', // generated ethereal password
     },
 });
 
@@ -52,8 +51,8 @@ router.post('/register', (req, res) => {
                     Users.create(userData)
                         .then(user => {
                             var mail = {
-                                from: testAccount.user,
-                                to: 'krushna159@gmail.com',  //Change to email address that you want to receive messages on
+                                from: 'kameron.maggio@ethereal.email',
+                                to: userData.emailId,  //Change to email address that you want to receive messages on
                                 subject: 'Registration Successful',
                                 text: `username:${userData.emailId} and password: ${userData.password}`,
                                 html: `<b>username:${userData.emailId} and password: ${userData.password}</b>`
@@ -61,9 +60,10 @@ router.post('/register', (req, res) => {
 
                             transporter.sendMail(mail, function(error, info){
                                 if (error) {
-                                  console.log(error);
+                                  res.send(error);
                                 } else {
-                                  console.log('Email sent: ' + info.response);
+                                  res.json('Registration Successfull. Email has been sent');
+                                  
                                 }
                               });
                         })

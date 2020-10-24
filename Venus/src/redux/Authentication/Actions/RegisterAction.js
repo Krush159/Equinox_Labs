@@ -26,7 +26,8 @@ export const userSignUpRequest = (userInfo) => dispatch => {
         body: JSON.stringify(userInfo)
     })
     .then(res => {
-       return res
+        dispatch(registerSuccess())
+        return res
     })
     .catch(err => {
         console.log(err)
