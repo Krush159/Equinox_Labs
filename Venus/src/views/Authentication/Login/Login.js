@@ -118,35 +118,22 @@ const Login = (props) => {
                 alignItems="center"
                 className={classes.background}
             >
-                <Grid item sm={10} xs={12} className={scss.panel}>
+                <Grid item sm={6} xs={12} className={scss.panel}>
                     <Grid direction={panelDirection} container spacing={0}>
                         <Grid
                             item
-                            sm={6}
+                            sm={12}
                             xs={12}
                         >
-                            <Card className={classNames(scss.card, classes['primary-card'])}>
+                            <Card className={scss.card}>
                                 <CardContent className={scss['signup-content']}>
                                     <img src={"https://i.ibb.co/4PqT957/Venus-Logo.jpg"} className={scss['signup-logo']} alt="logo" />
                                     <Typography variant="h5" component="h2" gutterBottom>
                                         Login
                                     </Typography>
                                     <Typography component="p" gutterBottom>
-                                        Welcome to our admin panel. Please login using the form or register for a new account using the button below.
+                                        Welcome to our admin panel. Please login using the form.
                                     </Typography>
-                                </CardContent>
-                                {/* <CardActions>
-                                    <Button fullWidth href="/register" color="secondary" variant="contained">Create an account</Button>
-                                </CardActions> */}
-                            </Card>
-                        </Grid>
-                        <Grid
-                            item
-                            sm={6}
-                            xs={12}
-                        >
-                            <Card className={scss.card}>
-                                <CardContent>
                                     <Grid container >
                                         <Grid item xs={12}>
                                             <TextField

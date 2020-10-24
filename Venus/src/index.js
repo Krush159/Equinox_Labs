@@ -18,17 +18,15 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Router history={hist}>
-        <Switch>
-          <Route path="/admin" render={(props) => <PrivateRoute {...props} />} />
-          <Route path="/rtl" component={RTL} />
-          <Route path="/login" render={() => <Login />} />
-          <Route path="/register" render={() => <Register />} />
-          <Redirect from="/" to="/login" />
-        </Switch>
-      </Router>
-    </BrowserRouter>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin" render={(props) => <PrivateRoute {...props} />} />
+        <Route path="/rtl" component={RTL} />
+        <Route path="/login" render={() => <Login />} />
+        <Route path="/register" render={() => <Register />} />
+        <Redirect from="/" to="/login" />
+      </Switch>
+    </Router>
   </Provider>
   ,
   document.getElementById("root")

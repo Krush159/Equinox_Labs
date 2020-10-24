@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { CircularProgress, Typography } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import axios from "axios";
 
 const columns = [
@@ -15,7 +16,7 @@ const columns = [
   },
   {
     name: "lastName",
-    label: "lastName",
+    label: "Last Name",
     options: {
       filter: false,
       sort: true,
@@ -23,7 +24,7 @@ const columns = [
   },
   {
     name: "email",
-    label: "email",
+    label: "Email Id",
     options: {
       filter: false,
       sort: true,
@@ -31,7 +32,7 @@ const columns = [
   },
   {
     name: "gender",
-    label: "gender",
+    label: "Gender",
     options: {
       filter: false,
       sort: true,
@@ -39,7 +40,7 @@ const columns = [
   },
   {
     name: "date",
-    label: "date",
+    label: "Date",
     options: {
       filter: false,
       sort: true,
@@ -51,14 +52,14 @@ const columns = [
 
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-
-        return [day, month, year].join('-');
+        let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
+        return [day, monthNames[month], year].join('-');
       }
     }
   },
   {
     name: "city",
-    label: "city",
+    label: "City",
     options: {
       filter: false,
       sort: true,
@@ -66,91 +67,91 @@ const columns = [
   },
   {
     name: "phone",
-    label: "phone",
+    label: "Phone",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "qualification",
-    label: "qualification",
+    label: "Qualification",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "specialization",
-    label: "specialization",
+    label: "Specialization",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "institute",
-    label: "institute",
+    label: "Institute",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "passingYear",
-    label: "passingYear",
+    label: "PassingYear",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "type",
-    label: "type",
+    label: "Type",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "designation",
-    label: "designation",
+    label: "Designation",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "organization",
-    label: "organization",
+    label: "Organization",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "workExpFrom",
-    label: "workExpFrom",
+    label: "WorkExpFrom",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "workExpTill",
-    label: "workExpTill",
+    label: "WorkExpTill",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "noticePeriod",
-    label: "noticePeriod",
+    label: "NoticePeriod",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "currentSalary",
-    label: "currentSalary",
+    label: "CurrentSalary",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "status",
-    label: "status",
+    label: "Status",
     options: {
       filter: true,
       sort: true,
@@ -185,18 +186,22 @@ class ApplicantList extends React.Component {
           rowsSelected.map(item => shortlistedCandidate.push(this.state.data[item]))
           console.log(shortlistedCandidate)
           this.setState({
-            shortlist:[...shortlistedCandidate]
+            shortlist: [...shortlistedCandidate]
           })
           this.props.data(shortlistedCandidate)
         },
-        
+        setTableProps: () => {
+          return {
+            padding: 'default'
+          }
+        },
         print: false,
         onTableInit: this.handleTableInit,
         onTableChange: this.handleTableChange,
       }
     }
   }
-
+ 
   componentDidMount() {
     this.getData(this.props.url, this.props.param)
   }
@@ -217,15 +222,15 @@ class ApplicantList extends React.Component {
     console.log(data)
     return (
       <div>
-        <MUIDataTable
-          title={<Typography variant="h6">
-            Candidate's List
+          <MUIDataTable
+            title={<Typography variant="h6">
+              Candidate's List
             {isLoading && <CircularProgress size={24} style={{ marginLeft: 15, position: 'relative', top: 4 }} />}
-          </Typography>}
-          data={data}
-          columns={columns}
-          options={options}
-        />
+            </Typography>}
+            data={data}
+            columns={columns}
+            options={options}
+          />
       </div>
     );
   }
