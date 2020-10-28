@@ -141,7 +141,7 @@ export default function VacancyComponent() {
     const handleEachCandidate = (data) => {
         console.log("datum", data)
         setOpenEachProfile(true)
-        setEachProfileData([...data])
+        setEachProfileData({...data})
     }
 
     const options = {

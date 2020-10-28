@@ -39,22 +39,23 @@ const columns = [
     }
   },
   {
-    name: "date",
-    label: "Date",
+    name: "dob",
+    label: "Date Of Birth",
     options: {
       filter: false,
       sort: true,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        var d = new Date(value),
-          month = '' + (d.getMonth() + 1),
-          day = '' + d.getDate(),
-          year = d.getFullYear();
+      // customBodyRender: (value, tableMeta, updateValue) => {
+      //   // var d = new Date(value),
+      //   //   month = '' + (d.getMonth() + 1),
+      //   //   day = '' + d.getDate(),
+      //   //   year = d.getFullYear();
 
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-        let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
-        return [day, monthNames[month], year].join('-');
-      }
+      //   // if (month.length < 2) month = '0' + month;
+      //   // if (day.length < 2) day = '0' + day;
+      //   // let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
+      //   // return [day, monthNames[month], year].join('-');
+      //   return new Date()
+      // }
     }
   },
   {
@@ -150,8 +151,8 @@ const columns = [
       sort: true,
     }
   }, {
-    name: "status",
-    label: "Status",
+    name: "flag",
+    label: "Flag",
     options: {
       filter: true,
       sort: true,
@@ -189,6 +190,7 @@ class ApplicantList extends React.Component {
             shortlist: [...shortlistedCandidate]
           })
           this.props.data(shortlistedCandidate)
+          
         },
         setTableProps: () => {
           return {
@@ -221,7 +223,8 @@ class ApplicantList extends React.Component {
     const { data, columns, options, isLoading } = this.state
     console.log(data)
     return (
-      <div>
+      <>
+        
           <MUIDataTable
             title={<Typography variant="h6">
               Candidate's List
@@ -231,7 +234,7 @@ class ApplicantList extends React.Component {
             columns={columns}
             options={options}
           />
-      </div>
+      </>
     );
   }
 }

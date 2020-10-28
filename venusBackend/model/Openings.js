@@ -26,7 +26,13 @@ const OpeningSchema = new Schema({
         workExpTill: { type: Date },
         noticePeriod: { type: Number },
         currentSalary: { type: Number },
-        status: { type: String },
+        flag:{ type: String },
+        callerUpdate:[new Schema({
+            status: {type:String},
+            comment: {type: String},
+            caller: {type: String},
+            timeStamp:{type:Date}
+        })],
     })],
     numOfSelectedCandidates:{ type: Number }
 

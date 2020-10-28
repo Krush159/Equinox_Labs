@@ -15,7 +15,7 @@ const columns = [
   },
   {
     name: "lastName",
-    label: "lastName",
+    label: "Last Name",
     options: {
       filter: false,
       sort: true,
@@ -31,35 +31,36 @@ const columns = [
   },
   {
     name: "gender",
-    label: "gender",
+    label: "Gender",
     options: {
       filter: false,
       sort: true,
     }
   },
   {
-    name: "date",
-    label: "date",
+    name: "dob",
+    label: "Date of Birth",
     options: {
       filter: false,
       sort: true,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        var d = new Date(value),
-          month = '' + (d.getMonth() + 1),
-          day = '' + d.getDate(),
-          year = d.getFullYear();
+      // customBodyRender: (value, tableMeta, updateValue) => {
+      //   // var d = new Date(value),
+      //   //   month = '' + (d.getMonth() + 1),
+      //   //   day = '' + d.getDate(),
+      //   //   year = d.getFullYear();
 
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
+      //   // if (month.length < 2) month = '0' + month;
+      //   // if (day.length < 2) day = '0' + day;
 
-        let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
-        return [day, monthNames[month], year].join('-');
-      }
+      //   // let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
+      //   // return [day, monthNames[month], year].join('-');
+      //   return new Date(value)
+      // }
     }
   },
   {
     name: "city",
-    label: "city",
+    label: "City",
     options: {
       filter: false,
       sort: true,
@@ -67,21 +68,21 @@ const columns = [
   },
   {
     name: "phone",
-    label: "phone",
+    label: "Phone",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "qualification",
-    label: "qualification",
+    label: "Qualification",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "specialization",
-    label: "specialization",
+    label: "Specialization",
     options: {
       filter: true,
       sort: true,
@@ -95,63 +96,63 @@ const columns = [
     }
   }, {
     name: "passingYear",
-    label: "passingYear",
+    label: "PassingYear",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "type",
-    label: "type",
+    label: "Type",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "designation",
-    label: "designation",
+    label: "Designation",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "organization",
-    label: "organization",
+    label: "Organization",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "workExpFrom",
-    label: "workExpFrom",
+    label: "WorkExpFrom",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "workExpTill",
-    label: "workExpTill",
+    label: "WorkExpTill",
     options: {
       filter: false,
       sort: true,
     }
   }, {
     name: "noticePeriod",
-    label: "noticePeriod",
+    label: "NoticePeriod",
     options: {
       filter: true,
       sort: true,
     }
   }, {
     name: "currentSalary",
-    label: "currentSalary",
+    label: "CurrentSalary",
     options: {
       filter: false,
       sort: true,
     }
   }, {
-    name: "status",
-    label: "status",
+    name: "flag",
+    label: "Flag",
     options: {
       filter: true,
       sort: true,
@@ -185,7 +186,8 @@ class CandidateList extends React.Component {
         onRowClick: (rowData, rowMeta) => {
             console.log(rowData)
             console.log(rowMeta)
-            if(this.props.datum){return this.props.datum(rowData)}
+            let item =this.state.data.find(item => item.email === rowData[2])
+            if(this.props.datum){return this.props.datum(item)}
         },
         onRowSelectionChange: (currentRowsSelected, allRows, rowsSelected) => {
           let shortlistedCandidate = []
@@ -202,9 +204,15 @@ class CandidateList extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-        data: this.props.data
-    })
+    axios.post("http://localhost:5000/getProfile/shortlisted", this.props.data)
+    .then(res => 
+      this.setState({
+        data: res.data
+      })
+    )
+    .catch(err => console.log(err))
+    
+    // console.log(this.props.data)
   }
 
   render() {

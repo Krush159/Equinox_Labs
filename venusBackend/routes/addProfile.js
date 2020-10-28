@@ -25,7 +25,8 @@ router.post('/', (req, res) => {
         workExpFrom: req.body.workExpFrom,
         workExpTill: req.body.workExpTill,
         noticePeriod: req.body.noticePeriod,
-        currentSalary: req.body.currentSalary
+        currentSalary: req.body.currentSalary,
+        flag: "Closed"
     }
     Profile.create(add_profile)
         .then(res => {

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField"
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -19,6 +20,8 @@ import CardFooter from "components/Card/CardFooter.js";
 import avatar from "assets/img/faces/marc.jpg";
 import OutlinedTimeline from "components/Timeline/Timeline";
 import Timeline2 from "components/Timeline/Timeline2";
+import Axios from "axios";
+import { connect } from "react-redux";
 
 const styles = {
     cardCategoryWhite: {
@@ -41,269 +44,313 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function EachProfile(props) {
+function EachProfile(props) {
     const classes = useStyles();
     const { data } = props
+    console.log(props)
+    const [newData, setnewData] = useState([])
+    const [updateData, setUpdateData] = useState({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        gender: data.gender,
+        dob: data.dob,
+        city: data.city,
+        phone: data.phone,
+        qualification: data.qualification,
+        specialization: data.specialization,
+        institute: data.institute,
+        passingYear: data.passingYear,
+        type: data.type,
+        designation: data.designation,
+        organization: data.organization,
+        workExpFrom: data.workExpFrom,
+        workExpTill: data.workExpTill,
+        noticePeriod: data.noticePeriod,
+        currentSalary: data.currentSalary,
+    })
+    const handleChange = (input) => ({ target: { value } }) => {
+        setUpdateData({
+            ...updateData,
+            [input]: value
+        })
+    }
+    const [callerObject, setCallerObject] = useState({
+        status: "",
+        comment: "",
+        caller: props.currentUser.firstName + " " + props.currentUser.lastName + " " + "(" + props.currentUser.role + ")",
+        timeStamp: new Date()
+    })
+    // useEffect(() => {
+    //     Axios.get('http://localhost:5000/getProfile/' + props.data._id)
+    //         .then(res => newData(res.data))
+    //         .catch(err => console.log(err))
+    // }, [callerObject, updateData])
+
+    const handleStatus = (input) => ({ target: { value } }) => {
+        setCallerObject({
+            ...callerObject,
+            [input]: value
+        })
+
+    }
+
+    const handleUpdate = async () => {
+
+        console.log("updatedData", updateData)
+        await Axios.put("http://localhost:5000/getProfile/updateProfile/" + data._id, updateData)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+    const handleCaller = async () => {
+        await Axios.put("http://localhost:5000/getProfile/callerUpdate/" + data._id, callerObject)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
     return (
         <div>
             <GridContainer>
                 <GridItem xs={12} sm={12} md={8}>
                     <Card profile>
-                        <CardAvatar profile>
+                        {/* <CardAvatar profile>
                             <a href="#pablo" onClick={e => e.preventDefault()}>
                                 <img src={avatar} alt="..." />
                             </a>
-                        </CardAvatar>
+                        </CardAvatar> */}
                         <CardBody>
                             <GridContainer>
                                 <GridItem xs={6} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="First Name"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.firstName}
+                                        onChange={handleChange('firstName')}
+                                        label="First Name"
                                         id="firstName"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[0]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={6} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="Last Name"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.lastName}
+                                        onChange={handleChange('lastName')}
+                                        label="Last Name"
                                         id="lastName"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[1]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="Email address"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.email}
+                                        onChange={handleChange('email')}
+                                        label="Email address"
                                         id="email"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[2]
-                                        }}
+
                                     />
                                 </GridItem>
                             </GridContainer>
                             <GridContainer>
                                 <GridItem xs={12} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="Gender"
+                                    <TextField
                                         id="gender"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[3]
-                                        }}
+                                        label="Gender"
+                                        fullWidth
+                                        margin="normal"
+                                        select
+                                        value={updateData.gender}
+                                        onChange={handleChange("gender")}
+                                    >
+                                        <MenuItem value={"Male"}>Male</MenuItem>
+                                        <MenuItem value={"Female"}>Female</MenuItem>
+                                        <MenuItem value={"Others"}>Others</MenuItem>
+
+                                    </TextField>
+                                </GridItem>
+                                <GridItem xs={12} sm={6} md={4}>
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.dob}
+                                        onChange={handleChange('dob')}
+                                        label="Date of Birth"
+                                        id="date"
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="Date of Birth"
-                                        id="dob"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[4]
-                                        }}
-                                    />
-                                </GridItem>
-                                <GridItem xs={12} sm={6} md={4}>
-                                    <CustomInput
-                                        labelText="City"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.city}
+                                        onChange={handleChange('city')}
+                                        label="City"
                                         id="city"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[5]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Contact no."
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.phone}
+                                        onChange={handleChange('phone')}
+                                        label="Contact no."
                                         id="phone"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[6]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Qualification"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.qualification}
+                                        onChange={handleChange('qualification')}
+                                        label="Qualification"
                                         id="qualification"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[7]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Specialization"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.specialization}
+                                        onChange={handleChange('specialization')}
+                                        label="Specialization"
                                         id="specialization"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[8]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Institute"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.institute}
+                                        onChange={handleChange('institute')}
+                                        label="Institute"
                                         id="institute"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[9]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="passingYear"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.passingYear}
+                                        onChange={handleChange('passingYear')}
+                                        label="passingYear"
                                         id="passingYear"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[10]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="type"
+                                    <TextField
                                         id="type"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[11]
-                                        }}
-                                    />
+                                        label="Type"
+                                        fullWidth
+                                        select
+                                        margin="normal"
+                                        value={updateData.type}
+                                        onChange={handleChange("type")}
+                                    >
+                                        <MenuItem value={"Full-Time"}>Full-Time</MenuItem>
+                                        <MenuItem value={"Part-Time"}>Part-Time</MenuItem>
+                                    </TextField>
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Designation"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.designation}
+                                        onChange={handleChange('designation')}
+                                        label="Designation"
                                         id="designation"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[12]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Organization"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.organization}
+                                        onChange={handleChange('organization')}
+                                        label="Organization"
                                         id="organization"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[13]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="workExpFrom"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.workExpFrom}
+                                        onChange={handleChange('workExpFrom')}
+                                        label="workExpFrom"
                                         id="workExpFrom"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[14]
-                                        }}
+
                                     />
                                 </GridItem>
+
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="workExpFrom"
-                                        id="workExpFrom"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[14]
-                                        }}
-                                    />
-                                </GridItem>
-                                <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="workExpTill"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.workExpTill}
+                                        onChange={handleChange('workExpTill')}
+                                        label="workExpTill"
                                         id="workExpTill"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[15]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="noticePeriod"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.noticePeriod}
+                                        onChange={handleChange('noticePeriod')}
+                                        label="noticePeriod"
                                         id="noticePeriod"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[16]
-                                        }}
+
                                     />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="currentSalary"
+                                    <TextField
+                                        autoComplete
+                                        fullWidth={true}
+                                        margin="normal"
+                                        value={updateData.currentSalary}
+                                        onChange={handleChange('currentSalary')}
+                                        label="currentSalary"
                                         id="currentSalary"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[17]
-                                        }}
+
                                     />
                                 </GridItem>
-                                <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Status"
-                                        id="status"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            value: data[18]
-                                        }}
-                                    />
+                                <GridItem xs={12}>
+                                    <Button color="primary" onClick={handleUpdate}>
+                                        Update Profile
+                                    </Button>
                                 </GridItem>
                             </GridContainer>
-
                         </CardBody>
-                        <CardFooter>
-                            <Button color="primary">Update Profile</Button>
-                        </CardFooter>
                     </Card>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -313,41 +360,54 @@ export default function EachProfile(props) {
                         </CardHeader>
                         <CardBody >
                             <GridItem xs={12} sm={12} md={12}>
-                                <FormControl fullWidth required margin="normal">
-                                    <InputLabel htmlFor="">Status</InputLabel>
-                                    <Select
-                                        id="status"
-                                    >
-                                        <MenuItem value={"Interested"}>Interested</MenuItem>
-                                        <MenuItem value={"Not Interested"}>Not Interested</MenuItem>
-                                        <MenuItem value={"Call Back"}>Call Back</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <TextField
+                                    id="status"
+                                    label="status"
+                                    value={callerObject.status}
+                                    fullWidth
+                                    margin="normal"
+                                    select
+                                    onChange={handleStatus("status")}
+                                >
+                                    <MenuItem value={"Call Back"}>Call Back</MenuItem>
+                                    <MenuItem value={"Ringing"}>Ringing</MenuItem>
+                                    <MenuItem value={"Not Reachable"}>Not Reachable</MenuItem>
+                                    <MenuItem value={"Interview Scheduled"}>Interview Scheduled</MenuItem>
+                                    <MenuItem value={"Not Interested"}>Not Interested</MenuItem>
+                                </TextField>
+
                             </GridItem>
                             <GridItem xs={12} sm={12} md={12}>
-                                <CustomInput
-                                    labelText="Enter the details here"
-                                    id="Caller Notes"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
+                                <TextField
+                                    autoComplete
+                                    fullWidth={true}
+                                    margin="normal"
+                                    value={callerObject.comment}
+                                    onChange={handleStatus("comment")}
+                                    label="Caller Notes"
+                                    id="comment"
                                     inputProps={{
                                         multiline: true,
-                                        rows: 5
+                                        rows: 5,
                                     }}
                                 />
                             </GridItem>
-                            <Button color="primary" round block>
+                            <Button color="primary" round block onClick={handleCaller}>
                                 Submit
                             </Button>
-                            <GridItem xs={12} sm={12} md={12} style={{background: 'rgb(220,220,220)', borderRadius: 10}}>
-                                {/* <OutlinedTimeline /> */}
-                                <Timeline2/>
+                            <GridItem xs={12} sm={12} md={12} style={{ background: 'rgb(220,220,220)', borderRadius: 10 }}>
+                                <Timeline2 dataID={data._id} />
                             </GridItem>
                         </CardBody>
                     </Card>
                 </GridItem>
             </GridContainer>
-        </div>
+        </div >
     );
 }
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.loginReducer.currentUser
+    }
+}
+export default connect(mapStateToProps)(EachProfile)

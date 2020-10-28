@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 const Users = require('../model/Users')
+const { getMaxListeners } = require('../model/Users')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -24,7 +25,6 @@ const transporter = nodemailer.createTransport({
 });
 
 
-
 // const transport = {
 //     host: 'smtp.gmail.com',
 //     auth: {
@@ -39,6 +39,7 @@ router.post('/register', (req, res) => {
         lastName: req.body.lastName,
         emailId: req.body.emailId,
         password: req.body.password,
+        phone: req.body.phone,
         role: req.body.role
     }
     Users.findOne({
@@ -95,6 +96,7 @@ router.post('/login', (req, res) => {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         emailId: user.emailId,
+                        phone: user.phone,
                         role: user.role
                     }
                     console.log(payload)

@@ -1,27 +1,45 @@
-import React from 'react';
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
+import Button from "components/CustomButtons/Button.js";
 
-export default function Timeline2() {
+export default function Timeline2(props) {
+    const [data, setData] = useState([])
+
+    // useEffect(() => {
+        async function fetchData(){
+            await Axios.get('http://localhost:5000/getProfile/candidates/' + props.dataID)
+            .then(res => setData([...res.data.callerUpdate]))
+            .catch(err => console.log(err))
+        }
+        fetchData()
+    // }, [data])
 
     return (
-        <VerticalTimeline layout={"1-column-left"}>
-            <VerticalTimelineElement
-                className="vertical-timeline-element--work"
-                // contentStyle={{ background: 'rgb(230,230,250)', color: 'black',  }}
-                contentArrowStyle={{ borderRight: '7px solid  rgb(218,112,214)' }}
-                date="2011 - present"
-                iconStyle={{ background: 'rgb(218,112,214)', color: 'rgb(139,0,139)', }}
-                style={{padding:'2px 0px'}}
+        data ? (
+            <VerticalTimeline layout={"1-column-left"}>
+                {data.map(item =>
+                    <VerticalTimelineElement
+                        className="vertical-timeline-element--work"
+                        // contentStyle={{ background: 'rgb(230,230,250)', color: 'black',  }}
+                        contentArrowStyle={{ borderRight: '7px solid  rgb(218,112,214)' }}
+                        date={item.timeStamp}
+                        iconStyle={{ background: 'rgb(218,112,214)', color: 'rgb(139,0,139)', }}
+                        style={{ padding: '2px 0px' }}
 
-            >
-                <h5 className="vertical-timeline-element-title">Creative Director</h5>
-                <h6 className="vertical-timeline-element-subtitle">Miami, FL</h6>
-                <small>
-                    Creative Direction, User Experience, Visual Design, Project Management, Team Leading
-                </small>
-            </VerticalTimelineElement>
-            <VerticalTimelineElement
+                    >
+                        <Button color="primary" round outline className="vertical-timeline-element-title">{item.status}</Button>
+                        <h6 className="vertical-timeline-element-subtitle">{item.comment}</h6>
+                        <h6><small>{item.caller}</small></h6>
+                    </VerticalTimelineElement>
+                )}
+            </VerticalTimeline>)
+
+
+            : <></>)
+
+    {/* <VerticalTimelineElement
                 className="vertical-timeline-element--work"
                 date="2010 - 2011"
                 contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
@@ -97,7 +115,7 @@ export default function Timeline2() {
             <VerticalTimelineElement
                 iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
 
-            />
-        </VerticalTimeline>
-    )
+            /> */}
+    // </VerticalTimeline>
+
 }

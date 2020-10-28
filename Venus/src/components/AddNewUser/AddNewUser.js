@@ -24,6 +24,7 @@ import Success from 'components/Multi-Step-Form/Success';
 
 
 const emailRegex = RegExp(/^[^@]+@[^@]+\.[^@]+$/)
+const phoneRegex = RegExp(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4,6})$/)
 const theme = createMuiTheme({
     palette: {
         primary: purple,
@@ -51,6 +52,7 @@ const Register = (props) => {
         lastName: "",
         emailId: "",
         password: "",
+        phone: "",
         role: ""
     })
     const [stateError, setStateError] = useState({
@@ -63,6 +65,7 @@ const Register = (props) => {
         state.lastName.length > 0 &&
         state.emailId.length > 0 &&
         state.password.length > 0 &&
+        state.phone.length > 0 &&
         state.role.length > 0;
     const handleChange = (input) => ({ target: { value } }) => {
         setState({
@@ -89,6 +92,11 @@ const Register = (props) => {
                 break
             case "password":
                 formErrors.password = value.length > 0 && value.length < 6 ? "Minimum 6 characaters required" : ""
+                break
+            case "phone":
+                formErrors.phone = phoneRegex.test(value)
+                    ? ""
+                    : "Please enter a valid phone number. i.e: xxxxxxxxxx"
                 break
             case "role":
                 formErrors.role = value === "" ? "Select any one role" : ""
@@ -210,26 +218,44 @@ const Register = (props) => {
                                                     />
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} className={classes.margin}>
-                                                <TextField
-                                                    id="select"
-                                                    label="Role"
-                                                    value={state.role}
-                                                    onChange={handleChange("role")}
-                                                    fullWidth
-                                                    margin="normal"
-                                                    select
-                                                    required
-                                                    variant="outlined"
-                                                    error={stateError.role !== ""}
-                                                    helperText={
-                                                        stateError.role !== "" ? `${stateError.role}` : ""
-                                                    }
-                                                >
-                                                    <MenuItem value={"Admin"}>Admin</MenuItem>
-                                                    <MenuItem value={"HR Manager"}>HR Manager</MenuItem>
-                                                    <MenuItem value={"HR"}>HR</MenuItem>
-                                                </TextField >
+                                            <Grid container spacing={3}>
+                                                <Grid item sm={6} xs={12}>
+                                                    <TextField
+                                                        label="Phone"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        required
+                                                        variant="outlined"
+                                                        type='Number'
+                                                        value={state.phone}
+                                                        onChange={handleChange('phone')}
+                                                        error={stateError.phone !== ""}
+                                                        helperText={
+                                                            stateError.phone !== "" ? `${stateError.phone}` : ""
+                                                        }
+                                                    />
+                                                </Grid>
+                                                <Grid item sm={6} xs={12} >
+                                                    <TextField
+                                                        id="select"
+                                                        label="Role"
+                                                        value={state.role}
+                                                        onChange={handleChange("role")}
+                                                        fullWidth
+                                                        margin="normal"
+                                                        select
+                                                        required
+                                                        variant="outlined"
+                                                        error={stateError.role !== ""}
+                                                        helperText={
+                                                            stateError.role !== "" ? `${stateError.role}` : ""
+                                                        }
+                                                    >
+                                                        <MenuItem value={"Admin"}>Admin</MenuItem>
+                                                        <MenuItem value={"HR Manager"}>HR Manager</MenuItem>
+                                                        <MenuItem value={"HR"}>HR</MenuItem>
+                                                    </TextField >
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </CardContent>

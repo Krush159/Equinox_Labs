@@ -39,25 +39,25 @@ function importExcelData2MongoDB(filePath){
       
             // Mapping columns to keys
             columnToKey: {
-                B: 'firstName',
-                C: 'lastName',
-                D: 'email',
-                E: 'gender',
-                F: 'date',
-                G: 'city',
-                H: 'phone',
-                I: 'qualification',
-                J: 'specialization',
-                K: 'institute',
-                L: 'passingYear',
-                M: 'type',
-                N: 'designation',
-                O: 'organization',
-                P: 'workExpFrom',
-                Q: 'workExpTill',
-                R: 'noticePeriod',
-                S: 'currentSalary',
-                T: 'status'
+                A: 'firstName',
+                B: 'lastName',
+                C: 'email',
+                D: 'gender',
+                E: 'dob',
+                F: 'city',
+                G: 'phone',
+                H: 'qualification',
+                I: 'specialization',
+                J: 'institute',
+                K: 'passingYear',
+                L: 'type',
+                M: 'designation',
+                N: 'organization',
+                O: 'workExpFrom',
+                P: 'workExpTill',
+                Q: 'noticePeriod',
+                R: 'currentSalary',
+                S: 'flag'
                 
             }
         }]

@@ -13,7 +13,7 @@ const isEmail = RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
 const PersonalDetails = ({
   handleNext,
   handleChange,
-  values: { firstName, lastName, email, gender, date, phone, city },
+  values: { firstName, lastName, email, gender, dob, phone, city },
   fieldError,
   isError
 }) => {
@@ -110,7 +110,7 @@ const PersonalDetails = ({
             label="Date of birth"
             name="birthday"
             type="date"
-            defaultValue={date}
+            defaultValue={dob}
             onChange={handleChange("date")}
             margin="normal"
             required

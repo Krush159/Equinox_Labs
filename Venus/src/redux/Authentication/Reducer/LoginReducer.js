@@ -11,16 +11,17 @@ const loginReducer = (state = initState, action) => {
             return { ...state, isAuth: false }
         case LOGIN_SUCCESS:
             alert("Login Successful")
+            console.log(action.payload)
             return { 
                 ...state,
-                isAuth:true, currentUser: action.payload
+                isAuth:true, currentUser: {...action.payload}
             }
         case LOGIN_FAILURE:
             alert(action.payload)
             return { ...state, isAuth: false }
         case LOGOUT_USER:
             localStorage.removeItem('token')
-            return { ...state, isAuth: false, currentUser:{} }
+            return { ...state, isAuth: false }
         default:
             return state;
     }

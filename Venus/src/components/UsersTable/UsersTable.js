@@ -25,14 +25,7 @@ import { purple } from '@material-ui/core/colors';
 const useStyles = makeStyles(styles);
 
 const columns = [
-        {
-            name: "_id",
-            label: "User Id",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
+        
         {
             name: "firstName",
             label: "First Name",
@@ -55,6 +48,14 @@ const columns = [
             options: {
                 filter: true,
                 sort: false,
+            }
+        },
+        {
+            name: "phone",
+            label: "Phone",
+            options: {
+                filter: true,
+                sort: true,
             }
         },
         {

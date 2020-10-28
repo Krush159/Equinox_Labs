@@ -84,7 +84,7 @@ export default function CreateVaccancy() {
         setOpenCandidateList(false);
     };
     const handleShortlistedData = (selectedData) => {
-        setState({ ...state, shortlistData: selectedData, numOfSelectedCandidates: data.length })
+        setState({ ...state, shortlistData: selectedData, numOfSelectedCandidates: selectedData.length })
     }
     const handleSubmitShortlisted = () => {
 
@@ -97,15 +97,24 @@ export default function CreateVaccancy() {
             alert("No Candidates Selected")
         }
     }
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         setData([...data, state])
         setVacancy(true)
         setOpen(false)
-        
-        return await axios
+        postOpenings()
+        async function postOpenings(){
+            await axios
             .post(`http://localhost:5000/jobOpenings`, state)
-            .then(res => console.log(res))
+            .then(()=>openFlag())
             .catch(err => console.log(err))
+        }
+        async function openFlag(){
+            
+            await axios
+             .patch(`http://localhost:5000/getProfile/openFlag`,state.shortlistData)
+             .then(res=> console.log(res))
+             .catch(err => console.log(err))
+        }
     }
 
     const classes = useStyles();
@@ -241,7 +250,7 @@ export default function CreateVaccancy() {
             >
                 <DialogTitle id="form-dialog-title">Select Candidates</DialogTitle>
                 <DialogContent>
-                    <ApplicantList url={"http://localhost:5000/getProfile"} params="" data={handleShortlistedData} />
+                    <ApplicantList url={"http://localhost:5000/getProfile/closedFlag"} params="" data={handleShortlistedData} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCandidateList} color="primary">

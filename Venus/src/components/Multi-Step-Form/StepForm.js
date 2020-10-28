@@ -20,7 +20,7 @@ const StepForm = () => {
     lastName: "",
     email: "",
     gender: "",
-    date: "",
+    dob: "",
     city: "",
     phone: "",
     qualification: "",

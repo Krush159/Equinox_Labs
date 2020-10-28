@@ -12,15 +12,12 @@ const Confirm = ({
   handleBack,
   values: { firstName, lastName, email, gender, date, phone, city, qualification, specialization, institute, passingYear, type, designation, organization, workExpFrom, workExpTill, noticePeriod, currentSalary }
 }) => {
-  const profile = {firstName, lastName, email, gender, date, phone, city, qualification, specialization, institute, passingYear, type, designation, organization, workExpFrom, workExpTill, noticePeriod, currentSalary}
+  const profile = {firstName, lastName, email, gender, date, phone, city, qualification, specialization, institute, passingYear, type, designation, organization, workExpFrom, workExpTill, noticePeriod, currentSalary, flag:"Closed"}
   console.log(profile)
   const handleSubmit = async() =>{
       return await axios
       .post(`http://localhost:5000/addProfile`, profile)
       .then(res => console.log(res))
-      // .then(data => { 
-      //     console.log(data)
-      // })
       .catch(err => console.log(err))
   }
   return (
