@@ -62,7 +62,7 @@ const sidebarStyle = theme => ({
   },
   logo: {
     position: "relative",
-    padding: "15px 15px",
+    padding: "5px 5px",
     zIndex: "4",
     "&:after": {
       content: '""',
@@ -78,10 +78,10 @@ const sidebarStyle = theme => ({
   logoLink: {
     ...defaultFont,
     textTransform: "uppercase",
-    padding: "5px 0",
+    padding: "5px 5px",
     display: "block",
     fontSize: "18px",
-    textAlign: "left",
+    textAlign: "center",
     fontWeight: "400",
     lineHeight: "30px",
     textDecoration: "none",
@@ -94,18 +94,21 @@ const sidebarStyle = theme => ({
     textAlign: "right"
   },
   logoImage: {
-    width: "30px",
+    width: "35px",
+    textAlign:"center",
     display: "inline-block",
     maxHeight: "30px",
-    marginLeft: "10px",
+    marginLeft: "15px",
     marginRight: "15px"
   },
   img: {
     width: "35px",
-    top: "22px",
-    position: "absolute",
+    // top: "22px",
+    // position: "absolute",
     verticalAlign: "middle",
-    border: "0"
+    border: "0",
+    textAlign:"center",
+    
   },
   background: {
     position: "absolute",
@@ -148,12 +151,13 @@ const sidebarStyle = theme => ({
   itemLink: {
     width: "auto",
     transition: "all 300ms linear",
-    margin: "10px 15px 0",
+    margin: "10px 5px",
     borderRadius: "3px",
     position: "relative",
     display: "block",
-    padding: "10px 15px",
+    padding: "5px 5px",
     backgroundColor: "transparent",
+    textAlign:"center",
     ...defaultFont
   },
   itemIcon: {
@@ -161,8 +165,8 @@ const sidebarStyle = theme => ({
     height: "30px",
     fontSize: "24px",
     lineHeight: "30px",
-    float: "left",
-    marginRight: "15px",
+    // float: "left",
+    // marginRight: "15px",
     textAlign: "center",
     verticalAlign: "middle",
     color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"

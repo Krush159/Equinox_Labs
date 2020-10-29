@@ -171,9 +171,9 @@ const AdminNavbarLinks = (props) => {
           onClick={handleClickProfile}
           className={classes.buttonLink}
         >
-          <Person className={classes.icons} />
+          <Person className={classes.icons} />{props.currentUser?<h6>{props.currentUser.firstName}</h6>:""}
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>{props.currentUser.firstName}</p>
           </Hidden>
         </Button>
         <Poppers
@@ -230,7 +230,8 @@ const AdminNavbarLinks = (props) => {
 }
 const mapStateToProps =(state) =>{
   return {
-    isAuth: state.loginReducer.isAuth
+    isAuth: state.loginReducer.isAuth,
+    currentUser: state.loginReducer.currentUser
   }
 }
 const mapDispatchToProps = (dispatch) => {

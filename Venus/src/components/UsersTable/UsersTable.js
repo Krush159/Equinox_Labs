@@ -24,8 +24,70 @@ import { blackColor } from 'assets/jss/material-dashboard-react';
 import { purple } from '@material-ui/core/colors';
 const useStyles = makeStyles(styles);
 
-const columns = [
+
+const theme = createMuiTheme({
+    overrides: {
+        MUIDataTableSelectCell: {
+            expandDisabled: {
+                // Soft hide the button.
+                visibility: 'hidden',
+            },
+        },
         
+        MUIDataTableBodyCell: {
+            root: {
+                padding: "5px 3px",
+                
+            }
+        },
+        MUIDataTableToolbar: {
+           
+        },
+        // handles table data header color
+        MUIDataTableHeadCell: {
+            root: {
+                color:'white'
+            },
+            fixedHeader:{
+                backgroundColor: '#12ACC6',
+            }
+        },
+        MUIDataTablePagination: {
+            root: {
+                backgroundColor: useStyles.tableFooter,
+                color: useStyles.textPrimary
+            }
+        },
+        // handles row hover color and selected row color
+        MuiTableRow: {
+            hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+            root: {
+                '&$selected': {
+                    backgroundColor: useStyles.tableRowSelectColor
+                }
+            }
+        },
+    },
+});
+
+const components = {
+    ExpandButton: function (props) {
+        return <ExpandButton {...props} />;
+    }
+};
+export default function UsersTable() {
+    const [data, setData] = useState([["Loading Data ..."]])
+    const [position, setPosition] = useState([])
+    const [shortlistedCandidates, setShortlistedCandidates] = useState([])
+    const [showRowData, setShowRowData] = useState(false)
+    const [openEachProfile, setOpenEachProfile] = useState(false)
+    const [eachProfileData, setEachProfileData] = useState([])
+    const [tableBodyHeight, setTableBodyHeight] = useState("500px");
+    const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("");
+    const classes = useStyles();
+
+    const columns = [
+
         {
             name: "firstName",
             label: "First Name",
@@ -68,57 +130,6 @@ const columns = [
         }
     ];
 
-const theme = createMuiTheme({
-    overrides: {
-        MUIDataTableSelectCell: {
-            expandDisabled: {
-                // Soft hide the button.
-                visibility: 'hidden',
-            },
-        },
-        MUIDataTableToolbar: {
-			root: {
-				backgroundColor: useStyles.tableHeader,
-				color: useStyles.textPrimary 
-			}
-		},
-		// handles table data header color
-		MUIDataTableHeadCell: {
-			fixedHeaderCommon: {
-				backgroundColor: purple
-			}
-        },
-        MUIDataTablePagination: {
-			root: {
-				backgroundColor: useStyles.tableFooter,
-				color: useStyles.textPrimary
-			}
-		},
-		// handles row hover color and selected row color
-		MuiTableRow: {
-			hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
-			root: {
-				'&$selected': {
-					backgroundColor: useStyles.tableRowSelectColor
-				}
-			}
-		},
-    },
-});
-
-const components = {
-    ExpandButton: function (props) {
-        return <ExpandButton {...props} />;
-    }
-};
-export default function UsersTable() {
-    const [data, setData] = useState([["Loading Data ..."]])
-    const [position, setPosition] = useState([])
-    const [shortlistedCandidates, setShortlistedCandidates] = useState([])
-    const [showRowData, setShowRowData] = useState(false)
-    const [openEachProfile, setOpenEachProfile] = useState(false)
-    const [eachProfileData, setEachProfileData] = useState([])
-
     const getAllUsers = async () => {
         return await Axios
             .get('http://localhost:5000/users/getAllUsers')
@@ -149,16 +160,9 @@ export default function UsersTable() {
         selectableRows: false,
         pagination: false,
         responsive: 'standard',
-        onRowClick: (rowData, rowMeta) => {
-            // setPosition(rowData[0])
-            // let selectedData = data[rowMeta.dataIndex]['shortlistData']
-            // console.log(selectedData)
-            // setShortlistedCandidates([...selectedData])
-            // setShowRowData(true)
-        },
-        expandableRows: false,
+        tableBodyHeight,
+        tableBodyMaxHeight
     };
-    const classes = useStyles();
     return (
         <>
             <GridContainer>
@@ -170,7 +174,7 @@ export default function UsersTable() {
                             </CardHeader>
                             <CardBody>
                                 <GridItem xs={12} sm={12} md={12}>
-                                    <Button color="primary" onClick={()=>setOpenEachProfile(false)}>
+                                    <Button color="primary" onClick={() => setOpenEachProfile(false)}>
                                         Back
                                 </Button>
                                 </GridItem>
@@ -186,7 +190,7 @@ export default function UsersTable() {
                                 </CardHeader>
                                 <CardBody>
                                     <GridItem xs={12} sm={12} md={12}>
-                                        <Button color="primary" onClick={()=>setShowRowData(false)}>
+                                        <Button color="primary" onClick={() => setShowRowData(false)}>
                                             Back
                                     </Button>
                                     </GridItem>

@@ -66,7 +66,7 @@ export default function Sidebar(props) {
                     [classes.itemIconRTL]: props.rtlActive
                   })}
                 />
-              )}
+              )}<br/>
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
@@ -90,9 +90,9 @@ export default function Sidebar(props) {
         target="_blank"
       >
         <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+          <img src={logo} alt="logo" className={classes.img} /><br/>
         </div>
-        {logoText}
+          <div>{logoText}</div>
       </a>
     </div>
   );

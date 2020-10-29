@@ -1,9 +1,61 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { CircularProgress, Typography } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import axios from "axios";
+import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+// @material-ui/core
+import { makeStyles } from "@material-ui/core/styles";
+import { CircularProgress, Typography } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(styles);
+
+const theme = createMuiTheme({
+  overrides: {
+      MUIDataTableSelectCell: {
+          expandDisabled: {
+              // Soft hide the button.
+              visibility: 'hidden',
+          },
+      },
+      
+      MUIDataTableBodyCell: {
+          root: {
+              padding: "5px 3px",
+              
+          }
+      },
+      MUIDataTableToolbar: {
+         
+      },
+      // handles table data header color
+      MUIDataTableHeadCell: {
+          root: {
+              color:'white',
+              padding: "5px 3px",
+          },
+          fixedHeader:{
+              backgroundColor: '#12ACC6',
+          }
+      },
+      MUIDataTablePagination: {
+          root: {
+              backgroundColor: useStyles.tableFooter,
+              color: useStyles.textPrimary
+          }
+      },
+      // handles row hover color and selected row color
+      MuiTableRow: {
+          hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+          root: {
+              '&$selected': {
+                  backgroundColor: useStyles.tableRowSelectColor
+              }
+          }
+      },
+  },
+});
+
 
 const columns = [
   {
@@ -12,6 +64,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   },
   {
@@ -20,6 +73,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   },
   {
@@ -28,6 +82,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   },
   {
@@ -36,6 +91,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   },
   {
@@ -44,6 +100,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
       // customBodyRender: (value, tableMeta, updateValue) => {
       //   // var d = new Date(value),
       //   //   month = '' + (d.getMonth() + 1),
@@ -64,6 +121,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   },
   {
@@ -72,6 +130,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "qualification",
@@ -79,6 +138,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "specialization",
@@ -86,6 +146,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "institute",
@@ -93,6 +154,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "passingYear",
@@ -100,6 +162,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "type",
@@ -107,6 +170,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "designation",
@@ -114,6 +178,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "organization",
@@ -121,6 +186,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "workExpFrom",
@@ -128,6 +194,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "workExpTill",
@@ -135,6 +202,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "noticePeriod",
@@ -142,6 +210,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "currentSalary",
@@ -149,6 +218,7 @@ const columns = [
     options: {
       filter: false,
       sort: true,
+      sortThirdClickReset: true
     }
   }, {
     name: "flag",
@@ -156,6 +226,7 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   },{
     name: "post",
@@ -163,15 +234,17 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      sortThirdClickReset: true
     }
   }
 ]
-class ApplicantList extends React.Component {
+class MainList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isLoading: false,
       data: [["Loading Data..."]],
+      
       shortlist: [],
       columns: columns,
       options: {
@@ -189,16 +262,8 @@ class ApplicantList extends React.Component {
             useDisplayedRowsOnly: true || true
           } || false
         },
-        onRowSelectionChange: (currentRowsSelected, allRows, rowsSelected) => {
-          let shortlistedCandidate = []
-          rowsSelected.map(item => shortlistedCandidate.push(this.state.data[item]))
-          console.log(shortlistedCandidate)
-          this.setState({
-            shortlist: [...shortlistedCandidate]
-          })
-          this.props.data(shortlistedCandidate)
-          
-        },
+        tableBodyHeight: '500px',
+        tableBodyMaxHeight:"",
         setTableProps: () => {
           return {
             padding: 'default'
@@ -212,13 +277,13 @@ class ApplicantList extends React.Component {
   }
  
   componentDidMount() {
-    this.getData(this.props.url, this.props.param)
+    this.getData()
   }
 
 
-  getData = async (url, params) => {
+  getData = async () => {
     this.setState({ isLoading: true });
-    await axios.get(params === "" ? url : url, { params })
+    await axios.get("http://localhost:5000/getProfile")
       .then(res => {
         console.log(res)
         this.setState({ data: res.data, isLoading: false })
@@ -231,7 +296,7 @@ class ApplicantList extends React.Component {
     console.log(data)
     return (
       <>
-        
+        <MuiThemeProvider theme={theme}>
           <MUIDataTable
             title={<Typography variant="h6">
               Candidate's List
@@ -241,9 +306,10 @@ class ApplicantList extends React.Component {
             columns={columns}
             options={options}
           />
+          </MuiThemeProvider>
       </>
     );
   }
 }
 
-export default ApplicantList;
+export default MainList;

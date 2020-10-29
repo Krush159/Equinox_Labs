@@ -66,8 +66,6 @@ const BulkUpload = () => {
 
     return (
         <Fragment>
-
-            <GridContainer>
                 <form onSubmit={onSubmit} encType="multipart/form-data">
                     <GridContainer>
                         <GridItem xs={12} sm={4} md={4}>
@@ -113,7 +111,6 @@ const BulkUpload = () => {
                         </GridItem>
                     </GridContainer>
                 </form>
-            </GridContainer>
         </Fragment>
     );
 };

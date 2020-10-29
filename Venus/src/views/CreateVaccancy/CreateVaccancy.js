@@ -109,9 +109,9 @@ export default function CreateVaccancy() {
             .catch(err => console.log(err))
         }
         async function openFlag(){
-            
+            const dataPost = {data:state.shortlistData, post:state.position}
             await axios
-             .patch(`http://localhost:5000/getProfile/openFlag`,state.shortlistData)
+             .patch(`http://localhost:5000/getProfile/openFlag`,dataPost)
              .then(res=> console.log(res))
              .catch(err => console.log(err))
         }
@@ -250,7 +250,7 @@ export default function CreateVaccancy() {
             >
                 <DialogTitle id="form-dialog-title">Select Candidates</DialogTitle>
                 <DialogContent>
-                    <ApplicantList url={"http://localhost:5000/getProfile/closedFlag"} params="" data={handleShortlistedData} />
+                    <ApplicantList url={"http://localhost:5000/getProfile/closedFlag"} params="" data={handleShortlistedData}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCandidateList} color="primary">

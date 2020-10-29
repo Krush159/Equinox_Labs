@@ -19,6 +19,7 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 import AddProfile from "views/Form/AddProfile";
 import BulkUpload from "components/BulkUpload/BulkUpload";
 import ApplicantList from "components/ApplicantsList/ApplicantsList";
+import MainList from "components/MainList/MainList";
 
 const useStyles = makeStyles(styles);
 
@@ -50,7 +51,7 @@ export default function Profile() {
                 tabName: "Candidate List",
                 tabIcon: ViewListSharpIcon,
                 tabContent: (
-                  <ApplicantList url={"http://localhost:5000/getProfile"} params =""/>
+                  <MainList/>
                 )
               }
             ]}

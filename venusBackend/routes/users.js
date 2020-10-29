@@ -15,12 +15,12 @@ process.env.SECRET_KEY = 'secret'
 const testAccount = nodemailer.createTestAccount();
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    service: "gmail",
+    // port: 587,
+    // secure: false, // true for 465, false for other ports
     auth: {
-        user: 'kameron.maggio@ethereal.email' , // generated ethereal user
-        pass: 'eHTYj5hU4vpYDt4GMh', // generated ethereal password
+        user: 'krushna.equinoxlabs@gmail.com' , // generated ethereal user
+        pass: 'elab@159', // generated ethereal password
     },
 });
 
@@ -52,11 +52,11 @@ router.post('/register', (req, res) => {
                     Users.create(userData)
                         .then(user => {
                             var mail = {
-                                from: 'kameron.maggio@ethereal.email',
+                                from: 'krushna.equinoxlabs@gmail.com',
                                 to: userData.emailId,  //Change to email address that you want to receive messages on
                                 subject: 'Registration Successful',
-                                text: `username:${userData.emailId} and password: ${userData.password}`,
-                                html: `<b>username:${userData.emailId} and password: ${userData.password}</b>`
+                                text: `username:${userData.emailId} and password: ${req.body.password}`,
+                                html: `<b>username:${userData.emailId} and password: ${req.body.password}</b>`
                             }
 
                             transporter.sendMail(mail, function(error, info){

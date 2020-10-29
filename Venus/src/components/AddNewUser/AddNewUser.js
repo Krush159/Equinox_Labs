@@ -104,11 +104,13 @@ const Register = (props) => {
             default:
                 break
         }
-
+        console.log(formErrors)
         // set error hook
-        Object.values(formErrors).forEach(error =>
-            error.length > 0 ? setIsError(true) : setIsError(false)
+        Object.values(formErrors).forEach(error => {
+                error.length > 0 ? setIsError(true) : setIsError(false)
+            }
         )
+
         // set errors hook
         setStateError({
             ...formErrors
@@ -121,12 +123,13 @@ const Register = (props) => {
                 lastName: "",
                 emailId: "",
                 password: "",
+                phone:"",
                 role: ""
             }))
 
     }
     const classes = useStyles();
-
+    
     return (
         <>
             <div style={{ height: "100vh" }}>
