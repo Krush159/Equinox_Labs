@@ -2,8 +2,60 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { CircularProgress, Typography } from '@material-ui/core';
 import MUIDataTable from "mui-datatables";
+import { makeStyles } from "@material-ui/core/styles";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import axios from "axios";
+
+const useStyles = makeStyles(styles);
+
+const theme = createMuiTheme({
+  overrides: {
+    MUIDataTableSelectCell: {
+      expandDisabled: {
+        // Soft hide the button.
+        visibility: 'hidden',
+      },
+    },
+
+    MUIDataTableBodyCell: {
+      root: {
+        padding: "5px 3px",
+
+      }
+    },
+    MUIDataTableToolbar: {
+
+    },
+    // handles table data header color
+    MUIDataTableHeadCell: {
+      root: {
+        color: 'white',
+        padding: "5px 10px",
+      },
+      fixedHeader: {
+        backgroundColor: '#12ACC6',
+      }
+    },
+    MUIDataTablePagination: {
+      root: {
+        backgroundColor: useStyles.tableFooter,
+        color: useStyles.textPrimary
+      }
+    },
+    // handles row hover color and selected row color
+    MuiTableRow: {
+      hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+      root: {
+        '&$selected': {
+          backgroundColor: useStyles.tableRowSelectColor
+        }
+      }
+    },
+  },
+});
+
+
 
 const columns = [
   {
@@ -157,7 +209,7 @@ const columns = [
       filter: true,
       sort: true,
     }
-  },{
+  }, {
     name: "post",
     label: "Post",
     options: {
@@ -181,6 +233,8 @@ class ApplicantList extends React.Component {
         responsive: 'standard',
         rowsPerPage: 10,
         download: true,
+        tableBodyHeight: '500px',
+        tableBodyMaxHeight:"",
         downloadOptions: {
           filename: 'tableDownload.csv',
           separator: ',',
@@ -197,7 +251,7 @@ class ApplicantList extends React.Component {
             shortlist: [...shortlistedCandidate]
           })
           this.props.data(shortlistedCandidate)
-          
+
         },
         setTableProps: () => {
           return {
@@ -210,7 +264,7 @@ class ApplicantList extends React.Component {
       }
     }
   }
- 
+
   componentDidMount() {
     this.getData(this.props.url, this.props.param)
   }
@@ -231,7 +285,7 @@ class ApplicantList extends React.Component {
     console.log(data)
     return (
       <>
-        
+        <MuiThemeProvider theme={theme}>
           <MUIDataTable
             title={<Typography variant="h6">
               Candidate's List
@@ -241,6 +295,7 @@ class ApplicantList extends React.Component {
             columns={columns}
             options={options}
           />
+        </MuiThemeProvider>
       </>
     );
   }

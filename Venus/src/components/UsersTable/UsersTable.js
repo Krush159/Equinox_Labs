@@ -24,50 +24,50 @@ import { blackColor } from 'assets/jss/material-dashboard-react';
 import { purple } from '@material-ui/core/colors';
 const useStyles = makeStyles(styles);
 
-
 const theme = createMuiTheme({
-    overrides: {
-        MUIDataTableSelectCell: {
-            expandDisabled: {
-                // Soft hide the button.
-                visibility: 'hidden',
-            },
-        },
-        
-        MUIDataTableBodyCell: {
-            root: {
-                padding: "5px 3px",
-                
-            }
-        },
-        MUIDataTableToolbar: {
-           
-        },
-        // handles table data header color
-        MUIDataTableHeadCell: {
-            root: {
-                color:'white'
-            },
-            fixedHeader:{
-                backgroundColor: '#12ACC6',
-            }
-        },
-        MUIDataTablePagination: {
-            root: {
-                backgroundColor: useStyles.tableFooter,
-                color: useStyles.textPrimary
-            }
-        },
-        // handles row hover color and selected row color
-        MuiTableRow: {
-            hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
-            root: {
-                '&$selected': {
-                    backgroundColor: useStyles.tableRowSelectColor
-                }
-            }
-        },
-    },
+  overrides: {
+      MUIDataTableSelectCell: {
+          expandDisabled: {
+              // Soft hide the button.
+              visibility: 'hidden',
+          },
+      },
+      
+      MUIDataTableBodyCell: {
+          root: {
+              padding: "5px 3px",
+              
+          }
+      },
+      MUIDataTableToolbar: {
+         
+      },
+      // handles table data header color
+      MUIDataTableHeadCell: {
+          root: {
+              color:'white',
+              padding: "5px 10px",
+          },
+          fixedHeader:{
+              backgroundColor: '#12ACC6',
+          }
+      },
+      MUIDataTablePagination: {
+          root: {
+              backgroundColor: useStyles.tableFooter,
+              color: useStyles.textPrimary
+          }
+      },
+      // handles row hover color and selected row color
+      MuiTableRow: {
+          hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+          root: {
+              '&$selected': {
+                  backgroundColor: useStyles.tableRowSelectColor
+              }
+          }
+      },
+  },
 });
 
 const components = {

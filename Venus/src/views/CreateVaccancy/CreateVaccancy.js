@@ -29,6 +29,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import axios from 'axios';
 import ApplicantList from 'components/ApplicantsList/ApplicantsList';
 import VacancyComponent from 'components/Vacancy/Vacancy';
+import { connect } from 'react-redux';
 
 const styles = {
     cardCategoryWhite: {
@@ -50,7 +51,8 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-export default function CreateVaccancy() {
+function CreateVaccancy(props) {
+    const username = props.currentUser.firstName +" "+ props.currentUser.lastName
     const [state, setState] = useState({
         position: "",
         numOfPosition: "",
@@ -58,7 +60,8 @@ export default function CreateVaccancy() {
         expDOJ: "",
         jobDescription: "",
         shortlistData: [],
-        numOfSelectedCandidates: ""
+        numOfSelectedCandidates: "",
+        createdBy: username
     })
     const [data, setData] = useState([])
     const [openCandidateList, setOpenCandidateList] = useState(false)
@@ -275,3 +278,9 @@ export default function CreateVaccancy() {
         </GridContainer>
     )
 }
+const mapStateToProps = state => {
+    return {
+        currentUser: state.loginReducer.currentUser
+    }
+}
+export default connect(mapStateToProps)(CreateVaccancy)

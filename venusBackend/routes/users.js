@@ -15,12 +15,13 @@ process.env.SECRET_KEY = 'secret'
 const testAccount = nodemailer.createTestAccount();
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "smtp.gmail.com",
+    host: "smtp.gmail.com",
     // port: 587,
     // secure: false, // true for 465, false for other ports
     auth: {
-        user: 'krushna.equinoxlabs@gmail.com' , // generated ethereal user
-        pass: 'elab@159', // generated ethereal password
+        user: 'krushna.equinoxlabs@gmail.com' , 
+        pass: 'elab@159',
     },
 });
 
@@ -52,7 +53,7 @@ router.post('/register', (req, res) => {
                     Users.create(userData)
                         .then(user => {
                             var mail = {
-                                from: 'krushna.equinoxlabs@gmail.com',
+                                from: '"EquinoxLabs" <krushna.equinoxlabs@gmail.com>',
                                 to: userData.emailId,  //Change to email address that you want to receive messages on
                                 subject: 'Registration Successful',
                                 text: `username:${userData.emailId} and password: ${req.body.password}`,

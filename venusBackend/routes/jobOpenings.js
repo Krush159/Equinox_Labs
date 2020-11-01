@@ -15,7 +15,8 @@ router.post('/', (req, res) => {
         expDOJ: req.body.expDOJ,
         jobDescription: req.body.jobDescription,
         shortlistData: req.body.shortlistData,
-        numOfSelectedCandidates: req.body.numOfSelectedCandidates
+        numOfSelectedCandidates: req.body.numOfSelectedCandidates,
+        createdBy: req.body.createdBy
     }
     console.log(addOpenings)
     Openings.create(addOpenings)

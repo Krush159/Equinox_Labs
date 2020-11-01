@@ -32,7 +32,7 @@ const theme = createMuiTheme({
       MUIDataTableHeadCell: {
           root: {
               color:'white',
-              padding: "5px 3px",
+              padding: "5px 10px",
           },
           fixedHeader:{
               backgroundColor: '#12ACC6',

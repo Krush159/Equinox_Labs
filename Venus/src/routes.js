@@ -38,15 +38,17 @@ const dashboardRoutes = [
     rtlName: "إضافة الملف الشخصي ",
     icon: PersonAddSharpIcon,
     component: Profile,
-    layout: "/admin"
+    layout: "/admin",
+    role: ["Admin","HR Manager"]
   },
   {
     path: "/Openings",
-    name: "Vacancy",
+    name: "Openings",
     rtlName: "فرص عمل",
     icon: WorkIcon,
     component: Openings,
-    layout: "/admin"
+    layout: "/admin",
+    role: ["Admin","HR Manager","HR"]
   },
   {
     path: "/Users",
@@ -54,7 +56,8 @@ const dashboardRoutes = [
     rtlName: "فرص عمل",
     icon: WorkIcon,
     component: UsersList,
-    layout: "/admin"
+    layout: "/admin",
+    role: ["Admin","HR Manager"]
   },
   // {
   //   path: "/user",

@@ -39,7 +39,23 @@ const styles = {
     },
     'primary-card': {
         background: theme.palette.primary.light,
-    }
+    },
+    number: {
+        "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+          "-webkit-appearance": "none",
+          margin: 0
+        },
+        "& input[type=number]" : {
+            "-moz-appearance": "textfield"
+          }
+      },
+    input: {
+        "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+          "-webkit-appearance": "none",
+          margin: 0
+        }
+      }
+
 };
 const useStyles = makeStyles(styles);
 
@@ -224,6 +240,8 @@ const Register = (props) => {
                                             <Grid container spacing={3}>
                                                 <Grid item sm={6} xs={12}>
                                                     <TextField
+                                                        id= "phone"
+                                                        className={classes.number}
                                                         label="Phone"
                                                         fullWidth
                                                         margin="normal"

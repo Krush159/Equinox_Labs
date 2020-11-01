@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import Chip from '@material-ui/core/Chip';
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -23,93 +24,52 @@ import EachProfile from 'views/EachProfile/EachProfile'
 import { blackColor } from 'assets/jss/material-dashboard-react';
 import { purple } from '@material-ui/core/colors';
 const useStyles = makeStyles(styles);
-const columns = [
-    {
-        name: "position",
-        label: "Position",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "numOfPosition",
-        label: "No.of Vacancies",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "experience",
-        label: "Minimum Experience",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "expDOJ",
-        label: "Expected DOJ",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "jobDescription",
-        label: "Job Description",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "numOfSelectedCandidates",
-        label: "Number of Candidates",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    }
-];
+
 
 const theme = createMuiTheme({
-    overrides: {
-        MUIDataTableSelectCell: {
-            expandDisabled: {
-                // Soft hide the button.
-                visibility: 'hidden',
-            },
-        },
-        MUIDataTableToolbar: {
-			root: {
-				backgroundColor: useStyles.tableHeader,
-				color: useStyles.textPrimary 
-			}
-		},
-		// handles table data header color
-		MUIDataTableHeadCell: {
-			fixedHeaderCommon: {
-				backgroundColor: purple
-			}
-        },
-        MUIDataTablePagination: {
-			root: {
-				backgroundColor: useStyles.tableFooter,
-				color: useStyles.textPrimary
-			}
-		},
-		// handles row hover color and selected row color
-		MuiTableRow: {
-			hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
-			root: {
-				'&$selected': {
-					backgroundColor: useStyles.tableRowSelectColor
-				}
-			}
-		},
-    },
+  overrides: {
+      MUIDataTableSelectCell: {
+          expandDisabled: {
+              // Soft hide the button.
+              visibility: 'hidden',
+          },
+      },
+      
+      MUIDataTableBodyCell: {
+          root: {
+              padding: "5px 3px",
+              
+          }
+      },
+      MUIDataTableToolbar: {
+         
+      },
+      // handles table data header color
+      MUIDataTableHeadCell: {
+          root: {
+              color:'white',
+              padding: "5px 10px",
+          },
+          fixedHeader:{
+              backgroundColor: '#12ACC6',
+          }
+      },
+      MUIDataTablePagination: {
+          root: {
+              backgroundColor: useStyles.tableFooter,
+              color: useStyles.textPrimary
+          }
+      },
+      // handles row hover color and selected row color
+      MuiTableRow: {
+          hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+          root: {
+              '&$selected': {
+                  backgroundColor: useStyles.tableRowSelectColor
+              }
+          }
+      },
+  },
 });
 
 const components = {
@@ -143,7 +103,72 @@ export default function VacancyComponent() {
         setOpenEachProfile(true)
         setEachProfileData({...data})
     }
-
+    const columns = [
+        {
+            name: "position",
+            label: "Position",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "numOfPosition",
+            label: "No.of Vacancies",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "experience",
+            label: "Minimum Experience",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "expDOJ",
+            label: "Expected DOJ",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "jobDescription",
+            label: "Job Description",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "numOfSelectedCandidates",
+            label: "Number of Candidates",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "createdBy",
+            label: "Created By",
+            options: {
+                filter: true,
+                sort: false,
+                customBodyRenderLite: (dataIndex) => {
+                    let value = data[dataIndex]['createdBy'];
+                    return <Chip label={value}/>
+                    console.log(value)
+                    // return value.map((val, key) => {
+                    //   return <Chip label={val} key={key} />;
+                    // });
+                  },
+            }
+        }
+    ];
     const options = {
         filter: false,
         search: false,

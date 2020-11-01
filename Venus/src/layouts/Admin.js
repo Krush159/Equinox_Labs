@@ -17,12 +17,13 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
+import { connect } from "react-redux";
 
 let ps;
 
-const switchRoutes = (
+const switchRoutes = (roleRoutes) => (
   <Switch>
-    {routes.map((prop, key) => {
+    {roleRoutes.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
           <Route
@@ -40,16 +41,29 @@ const switchRoutes = (
 
 const useStyles = makeStyles(styles);
 
-export default function Admin({ ...rest }) {
+function Admin({ ...rest }) {
+  
+  //return routes based on role
+  let userRole = {...rest}.currentUser.role
+  console.log(userRole)
+  let roleRoutes = []
+  routes.map(item => {
+    if(item.role.includes(userRole) === true){ roleRoutes.push(item)}
+  })
+  console.log(roleRoutes)
+ 
   // styles
   const classes = useStyles();
+  
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
+  
   // states and functions
   const [image, setImage] = React.useState(bgImage);
   const [color, setColor] = React.useState("blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  
   const handleImageClick = image => {
     setImage(image);
   };
@@ -95,7 +109,7 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes}
+        routes={roleRoutes}
         logoText={"Venus"}
         logo={logo}
         image={image}
@@ -106,17 +120,17 @@ export default function Admin({ ...rest }) {
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
-          routes={routes}
+          routes={roleRoutes}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
+            <div className={classes.container}>{switchRoutes(roleRoutes)}</div>
           </div>
         ) : (
-          <div className={classes.map}>{switchRoutes}</div>
+          <div className={classes.map}>{switchRoutes(roleRoutes)}</div>
         )}
         {getRoute() ? <Footer /> : null}
         {/* <FixedPlugin
@@ -131,3 +145,9 @@ export default function Admin({ ...rest }) {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return { 
+    currentUser : state.loginReducer.currentUser 
+  }
+}
+export default connect(mapStateToProps)(Admin)
