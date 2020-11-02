@@ -39,7 +39,7 @@ const dashboardRoutes = [
     icon: PersonAddSharpIcon,
     component: Profile,
     layout: "/admin",
-    role: ["Admin","HR Manager"]
+    role: ["Admin","HR Manager", "HR"]
   },
   {
     path: "/Openings",

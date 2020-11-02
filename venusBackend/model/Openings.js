@@ -35,7 +35,7 @@ const OpeningSchema = new Schema({
         })],
     })],
     numOfSelectedCandidates:{ type: Number },
-    createdBy:{ type:String }
+    openedBy:{ type:String }
 
 })
 module.exports = Openings = mongoose.model('Openings', OpeningSchema)

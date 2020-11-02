@@ -73,7 +73,7 @@ router.get('/candidates/:id', function (req, res, next) {
 
 router.patch('/openFlag', function( req,res,next){
   let updates = [...req.body.data].map(function(obj){
-    return Profile.updateOne({_id: obj._id},{$set: { flag: "Open", post: req.body.post }})
+    return Profile.updateOne({_id: obj._id},{$set: { flag: "Open", post: req.body.post, openedBy: req.body.openedBy}})
   })
 
   Promise.all(updates)

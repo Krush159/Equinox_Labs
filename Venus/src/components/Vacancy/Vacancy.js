@@ -153,13 +153,13 @@ export default function VacancyComponent() {
             }
         },
         {
-            name: "createdBy",
+            name: "openedBy",
             label: "Created By",
             options: {
                 filter: true,
                 sort: false,
                 customBodyRenderLite: (dataIndex) => {
-                    let value = data[dataIndex]['createdBy'];
+                    let value = data[dataIndex]['openedBy'];
                     return <Chip label={value}/>
                     console.log(value)
                     // return value.map((val, key) => {

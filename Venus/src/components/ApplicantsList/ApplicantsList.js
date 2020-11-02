@@ -216,6 +216,13 @@ const columns = [
       filter: true,
       sort: true,
     }
+  }, {
+    name: "openedBy",
+    label: "Created By",
+    options: {
+      filter: true,
+      sort: true,
+    }
   }
 ]
 class ApplicantList extends React.Component {

@@ -7,6 +7,7 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Typography } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(styles);
 
@@ -57,187 +58,7 @@ const theme = createMuiTheme({
 });
 
 
-const columns = [
-  {
-    name: "firstName",
-    label: "First Name",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },
-  {
-    name: "lastName",
-    label: "Last Name",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },
-  {
-    name: "email",
-    label: "Email Id",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },
-  {
-    name: "gender",
-    label: "Gender",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },
-  {
-    name: "dob",
-    label: "Date Of Birth",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-      // customBodyRender: (value, tableMeta, updateValue) => {
-      //   // var d = new Date(value),
-      //   //   month = '' + (d.getMonth() + 1),
-      //   //   day = '' + d.getDate(),
-      //   //   year = d.getFullYear();
 
-      //   // if (month.length < 2) month = '0' + month;
-      //   // if (day.length < 2) day = '0' + day;
-      //   // let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
-      //   // return [day, monthNames[month], year].join('-');
-      //   return new Date()
-      // }
-    }
-  },
-  {
-    name: "city",
-    label: "City",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },
-  {
-    name: "phone",
-    label: "Phone",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "qualification",
-    label: "Qualification",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "specialization",
-    label: "Specialization",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "institute",
-    label: "Institute",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "passingYear",
-    label: "PassingYear",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "type",
-    label: "Type",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "designation",
-    label: "Designation",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "organization",
-    label: "Organization",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "workExpFrom",
-    label: "WorkExpFrom",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "workExpTill",
-    label: "WorkExpTill",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "noticePeriod",
-    label: "NoticePeriod",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "currentSalary",
-    label: "CurrentSalary",
-    options: {
-      filter: false,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }, {
-    name: "flag",
-    label: "Flag",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  },{
-    name: "post",
-    label: "Post",
-    options: {
-      filter: true,
-      sort: true,
-      sortThirdClickReset: true
-    }
-  }
-]
 class MainList extends React.Component {
   constructor(props) {
     super(props)
@@ -246,7 +67,6 @@ class MainList extends React.Component {
       data: [["Loading Data..."]],
       
       shortlist: [],
-      columns: columns,
       options: {
         filter: true,
         selectableRows: 'multiple',
@@ -275,7 +95,203 @@ class MainList extends React.Component {
       }
     }
   }
- 
+  columns = [
+    {
+      name: "firstName",
+      label: "First Name",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },
+    {
+      name: "lastName",
+      label: "Last Name",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },
+    {
+      name: "email",
+      label: "Email Id",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },
+    {
+      name: "gender",
+      label: "Gender",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },
+    {
+      name: "dob",
+      label: "Date Of Birth",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+        // customBodyRender: (value, tableMeta, updateValue) => {
+        //   // var d = new Date(value),
+        //   //   month = '' + (d.getMonth() + 1),
+        //   //   day = '' + d.getDate(),
+        //   //   year = d.getFullYear();
+  
+        //   // if (month.length < 2) month = '0' + month;
+        //   // if (day.length < 2) day = '0' + day;
+        //   // let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
+        //   // return [day, monthNames[month], year].join('-');
+        //   return new Date()
+        // }
+      }
+    },
+    {
+      name: "city",
+      label: "City",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },
+    {
+      name: "phone",
+      label: "Phone",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "qualification",
+      label: "Qualification",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "specialization",
+      label: "Specialization",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "institute",
+      label: "Institute",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "passingYear",
+      label: "PassingYear",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "type",
+      label: "Type",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "designation",
+      label: "Designation",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "organization",
+      label: "Organization",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "workExpFrom",
+      label: "WorkExpFrom",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "workExpTill",
+      label: "WorkExpTill",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "noticePeriod",
+      label: "NoticePeriod",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "currentSalary",
+      label: "CurrentSalary",
+      options: {
+        filter: false,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    }, {
+      name: "flag",
+      label: "Flag",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true
+      }
+    },{
+      name: "post",
+      label: "Post",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true,
+        customBodyRenderLite: (dataIndex) => {
+          let value = this.state.data[dataIndex]['post'];
+          return value?<Chip label={value}/>:""
+        }
+      }
+    },{
+      name: "openedBy",
+      label: "Opened By",
+      options: {
+        filter: true,
+        sort: true,
+        sortThirdClickReset: true,
+        customBodyRenderLite: (dataIndex) => {
+          let value = this.state.data[dataIndex]['openedBy'];
+          return value?<Chip label={value}/>:""
+        }
+      }
+    }
+  ]
   componentDidMount() {
     this.getData()
   }
@@ -292,7 +308,7 @@ class MainList extends React.Component {
   }
 
   render() {
-    const { data, columns, options, isLoading } = this.state
+    const { data, options, isLoading } = this.state
     console.log(data)
     return (
       <>
@@ -303,7 +319,7 @@ class MainList extends React.Component {
             {isLoading && <CircularProgress size={24} style={{ marginLeft: 15, position: 'relative', top: 4 }} />}
             </Typography>}
             data={data}
-            columns={columns}
+            columns={this.columns}
             options={options}
           />
           </MuiThemeProvider>

@@ -61,7 +61,7 @@ function CreateVaccancy(props) {
         jobDescription: "",
         shortlistData: [],
         numOfSelectedCandidates: "",
-        createdBy: username
+        openedBy: username
     })
     const [data, setData] = useState([])
     const [openCandidateList, setOpenCandidateList] = useState(false)
@@ -112,7 +112,7 @@ function CreateVaccancy(props) {
             .catch(err => console.log(err))
         }
         async function openFlag(){
-            const dataPost = {data:state.shortlistData, post:state.position}
+            const dataPost = {data:state.shortlistData, post:state.position, openedBy: state.openedBy}
             await axios
              .patch(`http://localhost:5000/getProfile/openFlag`,dataPost)
              .then(res=> console.log(res))

@@ -22,6 +22,7 @@ const AddProfileSchema = new Schema({
     currentSalary: {type:Number},
     flag:{ type: String },
     post:{ type: String },
+    openedBy: { type:String },
     callerUpdate: [new Schema({
         status: {type:String},
         comment: {type: String},
