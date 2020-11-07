@@ -10,11 +10,11 @@ const OpeningSchema = new Schema({
     shortlistData: [new Schema({
         firstName: { type: String },
         lastName: { type: String },
-        email: { type: String },
+        email: { type: String, unique: true },
         gender: { type: String },
         date: { type: Date },
         city: { type: String },
-        phone: { type: Number },
+        phone: { type: Number,unique: true },
         qualification: { type: String },
         specialization: { type: String },
         institute: { type: String },

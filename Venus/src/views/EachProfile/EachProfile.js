@@ -22,6 +22,7 @@ import OutlinedTimeline from "components/Timeline/Timeline";
 import Timeline2 from "components/Timeline/Timeline2";
 import Axios from "axios";
 import { connect } from "react-redux";
+import { CalendarTodaySharp } from "@material-ui/icons";
 
 const styles = {
     cardCategoryWhite: {
@@ -75,17 +76,29 @@ function EachProfile(props) {
             [input]: value
         })
     }
+    const currentDate = () => {
+        let d = new Date(),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+      
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        let monthNames = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug', '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec' }
+        return [day, monthNames[month], year].join('-');
+    }
     const [callerObject, setCallerObject] = useState({
         status: "",
         comment: "",
         caller: props.currentUser.firstName + " " + props.currentUser.lastName + " " + "(" + props.currentUser.role + ")",
-        timeStamp: new Date()
+        timeStamp: currentDate()
     })
     // useEffect(() => {
     //     Axios.get('http://localhost:5000/getProfile/' + props.data._id)
     //         .then(res => newData(res.data))
     //         .catch(err => console.log(err))
     // }, [callerObject, updateData])
+
 
     const handleStatus = (input) => ({ target: { value } }) => {
         setCallerObject({
@@ -110,13 +123,8 @@ function EachProfile(props) {
     return (
         <div>
             <GridContainer>
-                <GridItem xs={12} sm={12} md={8}>
+                <GridItem xs={12} sm={12} md={7}>
                     <Card profile>
-                        {/* <CardAvatar profile>
-                            <a href="#pablo" onClick={e => e.preventDefault()}>
-                                <img src={avatar} alt="..." />
-                            </a>
-                        </CardAvatar> */}
                         <CardBody>
                             <GridContainer>
                                 <GridItem xs={6} sm={6} md={4}>
@@ -353,7 +361,7 @@ function EachProfile(props) {
                         </CardBody>
                     </Card>
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={5}>
                     <Card >
                         <CardHeader color="primary">
                             <h4 className={classes.cardTitleWhite}>Verify Details</h4>

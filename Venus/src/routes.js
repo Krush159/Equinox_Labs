@@ -12,6 +12,7 @@ import Language from "@material-ui/icons/Language";
 import Profile from "views/Profile/Profile";
 import Openings from "views/Openings/Openings"
 import UsersList from "views/UsersList/UsersList"
+import UserDashboard from "views/UserDashboard/UserDashboard"
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
@@ -24,14 +25,15 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 
 const dashboardRoutes = [
-  // {
-  //   path: "/dashboard",
-  //   name: "Dashboard",
-  //   rtlName: "لوحة القيادة",
-  //   icon: Dashboard,
-  //   component: DashboardPage,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/dashboard",
+    name: "Reports",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    component: UserDashboard,
+    layout: "/admin",
+    role: ["Admin","HR Manager"]
+  },
   {
     path: "/Profile",
     name: "Profile",

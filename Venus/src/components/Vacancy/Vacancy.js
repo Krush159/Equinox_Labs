@@ -27,49 +27,49 @@ const useStyles = makeStyles(styles);
 
 
 const theme = createMuiTheme({
-  overrides: {
-      MUIDataTableSelectCell: {
-          expandDisabled: {
-              // Soft hide the button.
-              visibility: 'hidden',
-          },
-      },
-      
-      MUIDataTableBodyCell: {
-          root: {
-              padding: "5px 3px",
-              
-          }
-      },
-      MUIDataTableToolbar: {
-         
-      },
-      // handles table data header color
-      MUIDataTableHeadCell: {
-          root: {
-              color:'white',
-              padding: "5px 10px",
-          },
-          fixedHeader:{
-              backgroundColor: '#12ACC6',
-          }
-      },
-      MUIDataTablePagination: {
-          root: {
-              backgroundColor: useStyles.tableFooter,
-              color: useStyles.textPrimary
-          }
-      },
-      // handles row hover color and selected row color
-      MuiTableRow: {
-          hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
-          root: {
-              '&$selected': {
-                  backgroundColor: useStyles.tableRowSelectColor
-              }
-          }
-      },
-  },
+    overrides: {
+        MUIDataTableSelectCell: {
+            expandDisabled: {
+                // Soft hide the button.
+                visibility: 'hidden',
+            },
+        },
+
+        MUIDataTableBodyCell: {
+            root: {
+                padding: "5px 3px",
+
+            }
+        },
+        MUIDataTableToolbar: {
+
+        },
+        // handles table data header color
+        MUIDataTableHeadCell: {
+            root: {
+                color: 'white',
+                padding: "5px 10px",
+            },
+            fixedHeader: {
+                backgroundColor: '#12ACC6',
+            }
+        },
+        MUIDataTablePagination: {
+            root: {
+                backgroundColor: useStyles.tableFooter,
+                color: useStyles.textPrimary
+            }
+        },
+        // handles row hover color and selected row color
+        MuiTableRow: {
+            hover: { '&$root': { '&:hover': { backgroundColor: useStyles.tableRowHoverColor }, } },
+            root: {
+                '&$selected': {
+                    backgroundColor: useStyles.tableRowSelectColor
+                }
+            }
+        },
+    },
 });
 
 const components = {
@@ -84,6 +84,7 @@ export default function VacancyComponent() {
     const [showRowData, setShowRowData] = useState(false)
     const [openEachProfile, setOpenEachProfile] = useState(false)
     const [eachProfileData, setEachProfileData] = useState([])
+    const [isInEditingMode, setisInEditingMode] = useState(false)
 
     const getAlljobOpenings = async () => {
         return await Axios
@@ -101,8 +102,17 @@ export default function VacancyComponent() {
     const handleEachCandidate = (data) => {
         console.log("datum", data)
         setOpenEachProfile(true)
-        setEachProfileData({...data})
+        setEachProfileData({ ...data })
     }
+
+    const showingShortilistedData = (rowData, rowIndex) => {
+        setPosition(rowData[0])
+        let selectedData = data[rowIndex]['shortlistData']
+        console.log(selectedData)
+        setShortlistedCandidates([...selectedData])
+        setShowRowData(true)
+    }
+
     const columns = [
         {
             name: "position",
@@ -134,6 +144,16 @@ export default function VacancyComponent() {
             options: {
                 filter: true,
                 sort: false,
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    return (
+                        <tr>
+                            <td>
+                                <div style={{ display: isInEditingMode ? 'none' : 'block' }} >{value}</div>
+                                <input style={{ display: isInEditingMode ? 'block' : 'none' }} value={value} />
+                            </td>
+                        </tr>
+                    );
+                }
             }
         },
         {
@@ -150,6 +170,18 @@ export default function VacancyComponent() {
             options: {
                 filter: true,
                 sort: false,
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    console.log(tableMeta)
+                    console.log(tableMeta.rowIndex)
+                    return (
+                        <div style={{ display: "flex" }}>
+                            <div>{value}</div>
+                            <button onClick={() => showingShortilistedData(tableMeta.rowData, tableMeta.rowIndex)}>
+                                Click
+                            </button>
+                        </div>
+                    );
+                }
             }
         },
         {
@@ -160,12 +192,12 @@ export default function VacancyComponent() {
                 sort: false,
                 customBodyRenderLite: (dataIndex) => {
                     let value = data[dataIndex]['openedBy'];
-                    return <Chip label={value}/>
+                    return <Chip label={value} />
                     console.log(value)
                     // return value.map((val, key) => {
                     //   return <Chip label={val} key={key} />;
                     // });
-                  },
+                },
             }
         }
     ];
@@ -179,13 +211,15 @@ export default function VacancyComponent() {
         selectableRows: false,
         pagination: false,
         responsive: 'standard',
-        onRowClick: (rowData, rowMeta) => {
-            setPosition(rowData[0])
-            let selectedData = data[rowMeta.dataIndex]['shortlistData']
-            console.log(selectedData)
-            setShortlistedCandidates([...selectedData])
-            setShowRowData(true)
-        },
+        // onRowClick: (rowData, rowMeta) => {
+        //     console.log(rowData)
+        //     console.log(rowMeta)
+        // setPosition(rowData[0])
+        // let selectedData = data[rowMeta.dataIndex]['shortlistData']
+        // console.log(selectedData)
+        // setShortlistedCandidates([...selectedData])
+        // setShowRowData(true)
+        // },
         expandableRows: false,
         expandableRowsHeader: false,
         expandableRowsOnClick: true,
@@ -219,7 +253,7 @@ export default function VacancyComponent() {
                             </CardHeader>
                             <CardBody>
                                 <GridItem xs={12} sm={12} md={12}>
-                                    <Button color="primary" onClick={()=>setOpenEachProfile(false)}>
+                                    <Button color="primary" onClick={() => setOpenEachProfile(false)}>
                                         Back
                                 </Button>
                                 </GridItem>
@@ -235,7 +269,7 @@ export default function VacancyComponent() {
                                 </CardHeader>
                                 <CardBody>
                                     <GridItem xs={12} sm={12} md={12}>
-                                        <Button color="primary" onClick={()=>setShowRowData(false)}>
+                                        <Button color="primary" onClick={() => setShowRowData(false)}>
                                             Back
                                     </Button>
                                     </GridItem>
