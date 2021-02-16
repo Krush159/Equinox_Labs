@@ -1,9 +1,10 @@
+
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken')
 const Users = require('../model/Users')
 const { getMaxListeners } = require('../model/Users')
 router.use(cors())
@@ -101,7 +102,7 @@ router.post('/login', (req, res) => {
                         role: user.role
                     }
                     console.log(payload)
-                    let token = jwt.sign(payload, process.env.SECRET_KEY, {
+                    let token = jwt.sign(payload, process.env.SECRET_KEY , {
                         expiresIn: 1440
                     })
                     res.send({ token, payload })
